@@ -1,24 +1,26 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import patientService from "../../services/patients";
 import { Container } from "@mui/material";
-import { Patient } from "../../types";
+import { Diagnosis, Patient } from "../../types";
 
-const PatientDetailsPage = () => {
+const PatientDetailsPage = ({ diagnoses }: { diagnoses: Diagnosis[] }) => {
   const id = useParams().id;
   const [patient, setPatient] = useState<Patient | null>();
 
-  const fetchPatient = async () => {
-    if (!id) return;
-    try {
-      const fetchedObj = await patientService.getById(id);
-      setPatient(fetchedObj);
-    } catch (error) {
-      setPatient(null);
-    }
-  };
-  fetchPatient();
+  useEffect(() => {
+    const fetchPatient = async () => {
+      if (!id) return;
+      try {
+        const fetchedObj = await patientService.getById(id);
+        setPatient(fetchedObj);
+      } catch (error) {
+        setPatient(null);
+      }
+    };
+    void fetchPatient();
+  }, [id]);
 
   if (!id) return <h1>Malformatted id in url</h1>;
   if (patient === null) return <h1>404 patient not found</h1>;
@@ -33,6 +35,21 @@ const PatientDetailsPage = () => {
           ssn: {patient.ssn} <br />
           occupation: {patient.occupation}
         </p>
+        <h2>Entries</h2>
+        {patient.entries.map((entry) => (
+          <div key={entry.id}>
+            <p>
+              {entry.date} {entry.description}
+            </p>
+            <ul>
+              {entry.diagnosisCodes?.map((code) => (
+                <li>
+                  {code} {diagnoses.find((d) => d.code === code)?.name};
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </Container>
     </div>
   );
