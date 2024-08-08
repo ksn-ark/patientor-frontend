@@ -13,13 +13,12 @@ const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
       />
       <CardContent>
         {/*returns red hearts out of 4 for rating and grey ones for the points lost*/}
-        {Object.values(HealthCheckRating).map((elem) => {
+        {Object.values(HealthCheckRating).map((elem, index) => {
           if (typeof elem === "number") {
             if (elem < 4 - entry.healthCheckRating) {
-              return <FavoriteIcon color="error" />;
+              return <FavoriteIcon key={index} color="error" />;
             }
-
-            return <FavoriteIcon color="disabled" />;
+            return <FavoriteIcon key={index} color="disabled" />;
           }
           return null;
         })}

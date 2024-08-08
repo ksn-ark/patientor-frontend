@@ -1,0 +1,29 @@
+import { TextField } from "@mui/material";
+import { EntryTypes, HealthCheckRating, SetState } from "../../../types";
+
+type props = {
+  type: EntryTypes;
+  rating: HealthCheckRating;
+  setRating: SetState<HealthCheckRating>;
+};
+
+const HealthCheckFields = ({ type, rating, setRating }: props) => {
+  if (type !== "HealthCheck") {
+    return null;
+  }
+  return (
+    <TextField
+      required
+      label="Rating"
+      margin="normal"
+      fullWidth
+      value={String(rating)}
+      onChange={(event) => {
+        const rating = event.target.value as HealthCheckRating;
+        setRating(rating);
+      }}
+    />
+  );
+};
+
+export default HealthCheckFields;

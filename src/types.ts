@@ -1,3 +1,11 @@
+import React from "react";
+
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+
 export interface Diagnosis {
   code: string;
   name: string;
@@ -19,15 +27,25 @@ interface BaseEntry {
   diagnosisCodes?: Array<Diagnosis["code"]>;
 }
 
+export type Discharge = {
+  date: string;
+  criteria: string;
+};
+
 export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
-  discharge: { date: string; criteria: string };
+  discharge: Discharge;
 }
+
+export type SickLeave = {
+  startDate: string;
+  endDate: string;
+};
 
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
-  sickLeave?: { startDate: string; endDate: string };
+  sickLeave?: SickLeave;
 }
 
 export enum HealthCheckRating {
@@ -57,4 +75,7 @@ export type Patient = {
   entries: Entry[];
 };
 
+export type EntryTypes = Entry["type"];
+export type NewBaseEntry = Omit<BaseEntry, "id">;
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+export type NewEntry = UnionOmit<Entry, "id">;
