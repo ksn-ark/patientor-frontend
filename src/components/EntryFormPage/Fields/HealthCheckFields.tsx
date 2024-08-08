@@ -16,10 +16,11 @@ const HealthCheckFields = ({ type, rating, setRating }: props) => {
       required
       label="Rating"
       margin="normal"
+      type="number"
       fullWidth
-      value={String(rating)}
+      value={rating}
       onChange={(event) => {
-        const rating = event.target.value as HealthCheckRating;
+        const rating = event.target.value as unknown as HealthCheckRating;
         setRating(rating);
       }}
     />

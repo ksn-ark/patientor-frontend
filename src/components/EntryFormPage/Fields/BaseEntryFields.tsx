@@ -1,5 +1,6 @@
-import { FormControl, TextField } from "@mui/material";
+import { FormControl, Input, TextField, Typography } from "@mui/material";
 import { NewBaseEntry, SetState } from "../../../types";
+import DiagnosesField from "./DiagnosesField";
 
 type props = {
   baseEntry: NewBaseEntry;
@@ -18,14 +19,14 @@ const BaseEntryFields = ({ baseEntry, setBaseEntry }: props) => {
           setBaseEntry({ ...baseEntry, description: event.target.value })
         }
       />
-      <TextField
-        required
-        label="Date"
-        margin="normal"
+      <Typography variant="subtitle1">Date:</Typography>
+      <Input
         value={baseEntry.date}
         onChange={(event) =>
           setBaseEntry({ ...baseEntry, date: event.target.value })
         }
+        margin="dense"
+        type="date"
       />
       <TextField
         required
@@ -36,17 +37,7 @@ const BaseEntryFields = ({ baseEntry, setBaseEntry }: props) => {
           setBaseEntry({ ...baseEntry, specialist: event.target.value })
         }
       />
-      <TextField
-        label="Diagnosis codes"
-        margin="normal"
-        value={baseEntry.diagnosisCodes?.join(", ")}
-        onChange={(event) =>
-          setBaseEntry({
-            ...baseEntry,
-            diagnosisCodes: event.target.value.split(", "),
-          })
-        }
-      />
+      <DiagnosesField baseEntry={baseEntry} setBaseEntry={setBaseEntry} />
     </FormControl>
   );
 };

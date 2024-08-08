@@ -27,7 +27,6 @@ const EntryForm = ({ submitEntry }: props) => {
     description: "",
     date: "",
     specialist: "",
-    diagnosisCodes: [],
   });
   const [discharge, setDischarge] = useState<Discharge>({
     date: "",

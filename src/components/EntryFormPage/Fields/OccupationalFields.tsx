@@ -1,6 +1,7 @@
 import {
   FormControl,
   FormControlLabel,
+  Input,
   Switch,
   TextField,
   Typography,
@@ -42,27 +43,30 @@ const OccupationalFields = ({
         control={<Switch onChange={() => setShowSickLeave(!showSickLeave)} />}
         label="Sick Leave"
       />
-      {showSickLeave && (
-        <>
-          <TextField
-            label="Start date"
-            required
-            margin="normal"
+      {!showSickLeave && (
+        <FormControl margin="normal">
+          <Typography variant="subtitle1">Start Date:</Typography>
+          <Input
             value={sickLeave.startDate}
+            required
+            margin="dense"
+            type="date"
             onChange={(event) =>
               setSickLeave({ ...sickLeave, startDate: event.target.value })
             }
           />
-          <TextField
-            label="End date"
-            required
-            margin="normal"
+
+          <Typography variant="subtitle1">End Date:</Typography>
+          <Input
             value={sickLeave.endDate}
+            required
+            margin="dense"
+            type="date"
             onChange={(event) =>
               setSickLeave({ ...sickLeave, endDate: event.target.value })
             }
           />
-        </>
+        </FormControl>
       )}
     </FormControl>
   );

@@ -1,4 +1,4 @@
-import { FormControl, TextField, Typography } from "@mui/material";
+import { FormControl, Input, TextField, Typography } from "@mui/material";
 import { Discharge, EntryTypes, SetState } from "../../../types";
 
 type props = {
@@ -14,11 +14,12 @@ const HospitalFields = ({ type, discharge, setDischarge }: props) => {
   return (
     <FormControl fullWidth>
       <Typography variant="h6">Discharge</Typography>
-      <TextField
-        required
-        label="Date"
-        margin="normal"
+      <Typography variant="subtitle1">Date: </Typography>
+      <Input
         value={discharge.date}
+        required
+        margin="dense"
+        type="date"
         onChange={(event) =>
           setDischarge({ ...discharge, date: event.target.value })
         }
